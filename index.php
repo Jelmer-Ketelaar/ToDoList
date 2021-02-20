@@ -1,3 +1,6 @@
+<?php
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,7 +32,7 @@
     <a href="#">Add Task</a>
     <table>
         <tr>
-            <th>id</th>
+            <th>ID</th>
             <th>Task Name</th>
             <th>Priority</th>
             <th>Deadline</th>
