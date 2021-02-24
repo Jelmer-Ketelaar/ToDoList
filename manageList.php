@@ -35,9 +35,35 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="index.php">Home</a>
             </li>
+            <?php
+            //Connect to database
+            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+
+            //Query to get the lists from the database
+            $sql2 = "SELECT * FROM ToDoList.list";
+
+            //Execute the query
+            $result2 = mysqli_query($conn2, $sql2);
+
+            //Check whether the query executed or not
+            if ($result2 == true) {
+                //Display the list in menu
+                while ($row2 = mysqli_fetch_assoc($result2)) {
+                    $list_id = $row2['list_id'];
+                    $list_name = $row2['list_name'];
+                    ?>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="listTask.php?list_id=<?php echo $list_id;?>"><?php echo $list_name ?></a>
+                    </li>
+
+                    <?php
+                }
+            }
+            ?>
         </ul>
     </div>
 </nav>
