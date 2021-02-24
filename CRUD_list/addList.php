@@ -69,12 +69,54 @@ function Query($sql)
 </head>
 <body>
 
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" >Add List Page</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="../index.php">Home</a>
+            </li>
+            <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="../manageList.php">Manage List</a>
+            </li>
+            <?php
+            //Connect to database
+            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+
+            //Query to get the lists from the database
+            $sql2 = "SELECT * FROM ToDoList.list";
+
+            //Execute the query
+            $result2 = mysqli_query($conn2, $sql2);
+
+            //Check whether the query executed or not
+            if ($result2 == true) {
+                //Display the list in menu
+                while ($row2 = mysqli_fetch_assoc($result2)) {
+                    $list_id = $row2['list_id'];
+                    $list_name = $row2['list_name'];
+                    ?>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../listTask.php?list_id=<?php echo $list_id;?>"><?php echo $list_name ?></a>
+                    </li>
+
+                    <?php
+                }
+            }
+            ?>
+        </ul>
+    </div>
+</nav>
+
 <h1>ToDoList</h1>
-
-<a href="../index.php">Home</a>
-<a href="../manageList.php">Manage lists</a>
-
-<h3>Add List Page</h3>
 <p>
     <?php
 
@@ -97,12 +139,6 @@ function Query($sql)
             <p style="margin-left: 0.5vw">List Name:</p>
             <label style="width: 15vw">
                 <input type="text" name="list_name" class="form-control" placeholder="Enter list name" required>
-            </label>
-        </div>
-        <div class="form-group">
-            <p style="margin-left: 0.5vw">List Description:</p>
-            <label style="width: 35vw">
-                <input type="text" name="list_description" class="form-control" placeholder="Enter list description">
             </label>
         </div>
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
