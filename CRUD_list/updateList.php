@@ -26,7 +26,6 @@ if ($result == true) {
 
     //Create Individual Variable to save the data
     $list_name = $row['list_name'];
-    $list_description = $row['list_description'];
 } else {
     //Creates a SESSION Variable to Save the message
     $_SESSION['update_fail'] = "Failed to Update the List";
@@ -41,7 +40,6 @@ if (isset($_POST['submit'])) {
 
     //Get the updated values from our form
     $list_name = $_POST['list_name'];
-    $list_description = $_POST['list_description'];
 
     //Database connection
     $conn2 = mysqli_connect('localhost', 'root', 'mysql');
@@ -50,7 +48,7 @@ if (isset($_POST['submit'])) {
     $db_select = mysqli_select_db($conn2, 'ToDoList');
 
 //Select all from list
-    $sql2 = "UPDATE ToDoList.list SET list_name = '$list_name', list_description = '$list_description' WHERE list_id = $list_id";
+    $sql2 = "UPDATE ToDoList.list SET list_name = '$list_name' WHERE list_id = $list_id";
 
 //Execute the query
     $result2 = mysqli_query($conn2, $sql2);
@@ -140,19 +138,11 @@ if (isset($_POST['submit'])) {
                    placeholder="Enter task name">
         </label>
     </div>
-    <div class="form-group">
-        <p style="margin-left: 0.5vw">List Description</p>
-        <label style="width: 35vw">
-            <input type="text" name="list_description" class="form-control" value="<?php echo $list_description ?>"
-                   placeholder="Enter task description">
-        </label>
-        <?php } ?>
-    </div>
+    <?php } ?>
+    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
 </form>
-<button type="submit" name="submit" class="btn btn-primary">Submit</button>
 
-
-<!-- Form To Add List Ends Here -->
+<!-- Form To Update List Ends Here -->
 
 </body>
 </html>
