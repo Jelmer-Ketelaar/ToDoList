@@ -1,5 +1,5 @@
 <?php
-include 'include/config.php';
+    session_start();
 ?>
 
 <!doctype html>
@@ -91,10 +91,7 @@ include 'include/config.php';
             <thead>
             <tr>
                 <th scope="row">ID</th>
-                <th>Task Name</th>
-                <th>Task Description</th>
-                <th>Priority</th>
-                <th>Deadline</th>
+                <th>List Name</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -132,7 +129,6 @@ include 'include/config.php';
             while ($row = mysqli_fetch_assoc($result)) {
             $list_id = $row['list_id'];
             $list_name = $row['list_name'];
-            $list_description = $row['list_description'];
 
             ?>
             <tbody>
@@ -142,9 +138,6 @@ include 'include/config.php';
                 <!-- Used ID++ because else when I delete a task/list, it will not count from the last existing ID -->
                 <th scope="row"><?php echo $id++ ?></th>
                 <td><?php echo $list_name ?></td>
-                <td><?php echo $list_description ?></td>
-                <td></td>
-                <td></td>
                 <td>
                     <a href="CRUD_list/updateList.php?list_id=<?php echo $list_id; ?>">Update</a>
                     <a href="CRUD_list/deleteList.php?list_id=<?php echo $list_id; ?>">Delete</a>
@@ -155,9 +148,7 @@ include 'include/config.php';
             }
             } else {
                 //Else Show a Message, That There Is No Data In The Database
-
                 ?>
-
                 <!-- Makes 1 column out of different columns -->
                 <tr>
                     <td colspan="3">No List Added Yet.</td>
