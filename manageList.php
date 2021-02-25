@@ -1,5 +1,5 @@
 <?php
-    session_start();
+session_start();
 ?>
 
 <!doctype html>
@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -33,39 +35,41 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="index.php">Home</a>
-            </li>
-            <?php
-            //Connect to database
-            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
-            //Query to get the lists from the database
-            $sql2 = "SELECT * FROM ToDoList.list";
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Home</a>
+                </li>
+                <?php
+                //Connect to database
+                $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
-            //Execute the query
-            $result2 = mysqli_query($conn2, $sql2);
+                //Query to get the lists from the database
+                $sql2 = "SELECT * FROM ToDoList.list";
 
-            //Check whether the query executed or not
-            if ($result2 == true) {
-                //Display the list in menu
-                while ($row2 = mysqli_fetch_assoc($result2)) {
-                    $list_id = $row2['list_id'];
-                    $list_name = $row2['list_name'];
-                    ?>
+                //Execute the query
+                $result2 = mysqli_query($conn2, $sql2);
 
-                    <li class="nav-item ">
-                        <a class="nav-link" href="listTask.php?list_id=<?php echo $list_id;?>"><?php echo $list_name ?></a>
-                    </li>
+                //Check whether the query executed or not
+                if ($result2 == true) {
+                    //Display the list in menu
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        $list_id = $row2['list_id'];
+                        $list_name = $row2['list_name'];
+                        ?>
 
-                    <?php
+                        <li class="nav-item ">
+                            <a class="nav-link"
+                               href="listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
+                        </li>
+
+                        <?php
+                    }
                 }
-            }
-            ?>
-        </ul>
-    </div>
+                ?>
+            </ul>
+        </div>
 </nav>
 
 <!-- Navbar ends here -->
@@ -188,8 +192,8 @@
             ?>
             </tbody>
         </table>
+<a class="btn btn-primary" href="CRUD_list/addList.php">Add List</a>
     </div>
 </div>
-<a class="btn btn-primary" href="CRUD_list/addList.php">Add List</a>
 </body>
 </html>
