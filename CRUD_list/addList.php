@@ -5,12 +5,11 @@ if (isset($_POST['submit'])) {
 
     //Get the values from form and save it in variables
     echo $list_name = $_POST['list_name'];
-    echo $list_description = $_POST['list_description'];
 
     //SQL Query to Insert data into database
-    Query("INSERT INTO list SET list_name = '$list_name', list_description = '$list_description'");
-}
 
+    Query("INSERT INTO list SET list_name = '$list_name'");
+}
 //Connects to database
 function Query($sql)
 {
@@ -23,6 +22,7 @@ function Query($sql)
         $dbName = 'ToDoList';
         $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
     }
+
     $execute = mysqli_query($conn, $sql);
 
     if ($execute == true) {
@@ -45,7 +45,7 @@ function Query($sql)
 ?>
 
 <!doctype html>
-<html lang="en" style="margin-left: 0.5vw">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -54,6 +54,8 @@ function Query($sql)
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/style.css">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -71,7 +73,7 @@ function Query($sql)
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" >Add List Page</a>
+    <a class="navbar-brand" href="#" style="cursor: auto">Update Task Page</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -81,41 +83,76 @@ function Query($sql)
             <li class="nav-item">
                 <a class="nav-link" href="../index.php">Home</a>
             </li>
-            <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="../manageList.php">Manage List</a>
-            </li>
-            <?php
-            //Connect to database
-            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
-
-            //Query to get the lists from the database
-            $sql2 = "SELECT * FROM ToDoList.list";
-
-            //Execute the query
-            $result2 = mysqli_query($conn2, $sql2);
-
-            //Check whether the query executed or not
-            if ($result2 == true) {
-                //Display the list in menu
-                while ($row2 = mysqli_fetch_assoc($result2)) {
-                    $list_id = $row2['list_id'];
-                    $list_name = $row2['list_name'];
-                    ?>
-
-                    <li class="nav-item ">
-                        <a class="nav-link" href="../listTask.php?list_id=<?php echo $list_id;?>"><?php echo $list_name ?></a>
-                    </li>
-
-                    <?php
-                }
-            }
-            ?>
         </ul>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../manageList.php">Manage Lists</a>
+                </li>
+
+                <?php
+                //Connect to database
+                $conn3 = mysqli_connect('localhost', 'root', 'mysql');
+
+                //Query to get the lists from the database
+                $sql3 = "SELECT * FROM ToDoList.list";
+
+                //Execute the query
+                $result3 = mysqli_query($conn3, $sql3);
+
+                //Check whether the query executed or not
+                if ($result3 == true) {
+                    //Display the list in menu
+                    while ($row3 = mysqli_fetch_assoc($result3)) {
+                        $list_id = $row3['list_id'];
+                        $list_name = $row3['list_name'];
+                        ?>
+
+                        <li class="nav-item ">
+                            <a class="nav-link"
+                               href="../listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
+                        </li>
+
+                        <?php
+                    }
+                }
+                ?>
+            </ul>
+        </div>
     </div>
 </nav>
+<a>
+    <?php
+    //Connect to database
+    $conn6 = mysqli_connect('localhost', 'root', 'mysql');
 
+    $db_select7 = mysqli_select_db($conn6, 'todolist');
+
+    //Query to get the lists from the database
+    $sql8 = "SELECT * FROM ToDoList.status";
+
+    //Execute the query
+    $result8 = mysqli_query($conn6, $sql8);
+
+    //Check whether the query executed or not
+    if ($result8 == true) {
+        //Display the list in menu
+        while ($row5 = mysqli_fetch_assoc($result8)) {
+            $status_id = $row5['status_id'];
+            $status_name = $row5['status_name'];
+            ?>
+
+            <li class="nav-item ">
+                <a class="nav-link"
+                   href="../listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
+            </li>
+
+            <?php
+        }
+    }
+    ?>
+</a>
 <h1>ToDoList</h1>
 <p>
     <?php
@@ -132,17 +169,19 @@ function Query($sql)
 
     ?>
 </p>
-<div class="form-box">
-    <!-- Form To Add List Starts Here -->
-    <form method="POST" action="">
-        <div class="form-group">
-            <p style="margin-left: 0.5vw">List Name:</p>
-            <label style="width: 15vw">
-                <input type="text" name="list_name" class="form-control" placeholder="Enter list name" required>
-            </label>
-        </div>
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-    </form>
+<div class="form">
+    <div class="form-box">
+        <!-- Form To Add List Starts Here -->
+        <form method="POST" action="">
+            <div class="form-group">
+                <p style="margin-left: 0.5vw">List Name:</p>
+                <label style="width: 15vw">
+                    <input type="text" name="list_name" class="form-control" placeholder="Enter list name" required>
+                </label>
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 </div>
 <!-- Form To Add List Ends Here -->
 
