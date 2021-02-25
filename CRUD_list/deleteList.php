@@ -13,30 +13,29 @@ if (isset($_GET['list_id'])) {
 
     //Select Database
     $db_select = mysqli_select_db($conn, 'ToDoList');
-
-
-    //Delete from list where id = $list_id
     $sql = "DELETE FROM ToDoList.list WHERE list_id = $list_id";
-        //Execute the query
-        $result = mysqli_query($conn, $sql);
 
-        //Check whether the query executed successfully or not
-        if ($result == true) {
-            //Query Executed Successfully, wich means that the list is deleted successfully
-            $_SESSION['delete'] = 'List deleted Successfully';
+    //Execute the query
+    $result = mysqli_query($conn, $sql);
 
-            //Redirect to manage list page
-            header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/manageList.php');
-        } else {
-            //Failed to delete the list
-            //Query Executed Successfully, wich means that the list is deleted successfully
-            $_SESSION['delete_fail'] = 'Failed to delete the list';
+    //Check whether the query executed successfully or not
+    if ($result == true) {
+        //Query Executed Successfully, wich means that the list is deleted successfully
+        $_SESSION['delete'] = 'List deleted Successfully';
 
-            //Redirect to manage list page
-            header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/manageList.php');
+        //Redirect to manage list page
+        header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/manageList.php');
+    } else {
+        //Failed to delete the list
+        //Query Executed Successfully, wich means that the list is deleted successfully
+        $_SESSION['delete_fail'] = 'Failed to delete the list';
 
-        }
+        //Redirect to manage list page
+        header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/manageList.php');
 
     }
+
+}
+
 
 
