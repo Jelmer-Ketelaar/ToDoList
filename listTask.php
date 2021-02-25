@@ -15,6 +15,8 @@ $list_id_url = $_GET['list_id'];
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="css/style.css">
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -109,6 +111,7 @@ $list_id_url = $_GET['list_id'];
 
             //Execute The Query
             $result = mysqli_query($conn, $sql);
+
             $id = 1;
             //Checks whether the query is executed successfully or not
             if ($result == true) {
@@ -119,6 +122,7 @@ $list_id_url = $_GET['list_id'];
             $priority = $row['priority'];
             $begin_date = $row['begin_date'];
             $deadline = $row['deadline'];
+
             ?>
 
             <tbody>
@@ -160,3 +164,4 @@ $list_id_url = $_GET['list_id'];
 
 </body>
 </html>
+
