@@ -13,6 +13,8 @@ session_start();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="css/style.css">
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -33,6 +35,7 @@ session_start();
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -58,7 +61,8 @@ session_start();
                     ?>
 
                     <li class="nav-item ">
-                        <a class="nav-link" href="listTask.php?list_id=<?php echo $list_id;?>"><?php echo $list_name ?></a>
+                        <a class="nav-link"
+                           href="listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
                     </li>
 
                     <?php
@@ -70,9 +74,7 @@ session_start();
 </nav>
 <!-- Navbar ends here -->
 
-
 <h1>ToDoList</h1>
-
 <p>
     <?php
 
@@ -112,7 +114,6 @@ session_start();
 
 
 <!--Table to display lists starts here-->
-
 <div class="all-lists">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
@@ -201,8 +202,11 @@ session_start();
             ?>
             </tbody>
         </table>
+        <a class="btn btn-primary" href="CRUD_task/addTask.php">Add Task</a>
     </div>
 </div>
-<a class="btn btn-primary" href="CRUD_task/addTask.php">Add Task</a>
+
+
+</div>
 </body>
 </html>
