@@ -21,17 +21,14 @@ $result = mysqli_query($conn, $sql);
 if ($result == true) {
     //Get the value from the database
     $row = mysqli_fetch_assoc($result); //Value is in array
-    //Printing $row array
-    //print_r($row);
 
-    //Create Individual Variable to save the data
-    $list_name = $row['list_name'];
+
 } else {
     //Creates a SESSION Variable to Save the message
     $_SESSION['update_fail'] = "Failed to Update the List";
 
     //Redirect to Same Page
-    header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/manageList.php');
+    header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/CRUD_list/updateList.php?list_id=' . $list_id);
 }
 
 /* Here starts the code for updating when clicking the button */
@@ -45,10 +42,10 @@ if (isset($_POST['submit'])) {
     $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
 //Select Database
-    $db_select = mysqli_select_db($conn2, 'ToDoList');
+    $db_select = mysqli_select_db($conn2, 'todolist');
 
 //Select all from list
-    $sql2 = "UPDATE ToDoList.list SET list_name = '$list_name' WHERE list_id = $list_id";
+    $sql2 = "UPDATE todolist.list SET list_name = '$list_name' WHERE list_id = $list_id";
 
 //Execute the query
     $result2 = mysqli_query($conn2, $sql2);
@@ -83,6 +80,8 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="../css/style.css">
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -110,41 +109,44 @@ if (isset($_POST['submit'])) {
             </li>
         </ul>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../manageList.php">Manage Lists</a>
-                    </li>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../manageList.php">Manage Lists</a>
+                </li>
 
-                    <?php
-                    //Connect to database
-                    $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+                <?php
+                //Connect to database
+                $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
-                    //Query to get the lists from the database
-                    $sql2 = "SELECT * FROM ToDoList.list";
+                //Query to get the lists from the database
+                $sql2 = "SELECT * FROM ToDoList.list";
 
-                    //Execute the query
-                    $result2 = mysqli_query($conn2, $sql2);
+                //Execute the query
+                $result2 = mysqli_query($conn2, $sql2);
 
-                    //Check whether the query executed or not
-                    if ($result2 == true) {
-                        //Display the list in menu
-                        while ($row2 = mysqli_fetch_assoc($result2)) {
-                            $list_id = $row2['list_id'];
-                            $list_name = $row2['list_name'];
-                            ?>
+                //Check whether the query executed or not
+                if ($result2 == true) {
+                    //Display the list in menu
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        $list_id = $row2['list_id'];
+                        $list_name = $row2['list_name'];
+                        ?>
 
-                            <li class="nav-item ">
-                                <a class="nav-link" href="../listTask.php?list_id=<?php echo $list_id;?>"><?php echo $list_name ?></a>
-                            </li>
+                        <li class="nav-item ">
+                            <a class="nav-link"
+                               href="../listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
+                        </li>
 
-                            <?php
-                        }
+
+                        <?php
                     }
-                    ?>
-                </ul>
-            </div>
+                }
+                ?>
+            </ul>
+        </div>
     </div>
+
 </nav>
 <h1>ToDoList</h1>
 
@@ -158,22 +160,24 @@ if (isset($_POST['submit'])) {
         unset ($_SESSION['update_fail']);
 
     }
+
     ?>
 
 </p>
 <!-- Form To Update List Starts Here -->
-<form method="POST" action="">
-    <div class="form-group">
-        <p style="margin-left: 0.5vw">List Name:</p>
-        <label style="width: 15vw">
-            <input type="text" name="list_name" class="form-control" value="<?php echo $list_name ?>"
-                   placeholder="Enter task name">
-        </label>
-    </div>
-    <?php } ?>
-    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-</form>
-
+<div class="form">
+    <form method="POST" action="">
+        <div class="form-group">
+            <p>List Name:</p>
+            <label style="width: 15vw">
+                <input type="text" name="list_name" class="form-control" value="<?php echo $row['list_name']; ?>"
+                       placeholder="Enter list name">
+            </label>
+        </div>
+        <?php } ?>
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 <!-- Form To Update List Ends Here -->
 
 </body>
