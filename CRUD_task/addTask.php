@@ -27,6 +27,7 @@ deadline = '$deadline'";
 
     $execute = mysqli_query($conn, $sql);
 
+
     if ($execute == true) {
         //Creates a SESSION Variable to Display the message
         $_SESSION['add'] = "List Added Successfully";
@@ -54,6 +55,8 @@ deadline = '$deadline'";
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/style.css">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -130,12 +133,13 @@ deadline = '$deadline'";
 
     ?>
 </p>
+<div class="form">
 <form method="POST" action="">
     <div class="form-group">
         <p>List Name:</p>
         <label style="width: 15vw">
             <input type="text" name="task_name" class="form-control" value="<?php echo $task_name ?>"
-                   placeholder="Enter task name">
+                   placeholder="Enter task name" required>
         </label>
     </div>
     <div class="form-group">
@@ -226,6 +230,7 @@ deadline = '$deadline'";
     </div>
 
     <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+    </div>
 </form>
 <!-- Form To Add List Ends Here -->
 </body>
