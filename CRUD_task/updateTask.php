@@ -23,9 +23,9 @@ if (isset($_GET['task_id'])) {
         //Get the value from database
         $row = mysqli_fetch_assoc($result);
         //Get individual value
-        $list_id = $row['list_id'];
         $task_name = $row['task_name'];
         $task_description = $row['task_description'];
+        $list_id = $row['list_id'];
         $priority = $row['priority'];
         $begin_date = $row['begin_date'];
         $deadline = $row['deadline'];
@@ -49,24 +49,24 @@ if (isset($_GET['task_id'])) {
 if (isset($_POST['submit'])) {
 
 //Get the updated values from our form
-    $list_id = $_POST['task_id'];
     $task_name = $_POST['task_name'];
     $task_description = $_POST['task_description'];
+    $list_id = $_POST['list_id'];
     $priority = $_POST['priority'];
     $begin_date = $_POST['begin_date'];
     $deadline = $_POST['deadline'];
 
     //Database connection
-    $conn3 = mysqli_connect('localhost', 'root', 'mysql');
+    $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
     //Select Database
-    $db_select3 = mysqli_select_db($conn3, 'ToDoList');
+    $db_select2 = mysqli_select_db($conn2, 'ToDoList');
 
     //Select all from list
-    $sql3 = "UPDATE ToDoList.task SET
+    $sql2 = "UPDATE ToDoList.task SET
 task_name = '$task_name',
 task_description = '$task_description',
-task_id = '$task_id',
+list_id = '$list_id',
 priority = '$priority',
 begin_date = '$begin_date',
 deadline = '$deadline'
@@ -74,9 +74,9 @@ WHERE
 task_id = $task_id";
 
     //Execute the query
-    $result3 = mysqli_query($conn3, $sql3);
+    $result2 = mysqli_query($conn2, $sql2);
 
-    if ($result3 == true) {
+    if ($result2 == true) {
         //If update is successful
         //Set the message
         $_SESSION['update'] = "List Updated Successfully";
@@ -105,6 +105,8 @@ task_id = $task_id";
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
 
+    <link rel="stylesheet" href="../css/style.css">
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -118,6 +120,7 @@ task_id = $task_id";
     <title>ToDoList</title>
 </head>
 <body>
+<div>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#" style="cursor: auto">Update Task Page</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -139,24 +142,25 @@ task_id = $task_id";
 
                 <?php
                 //Connect to database
-                $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+                $conn3 = mysqli_connect('localhost', 'root', 'mysql');
 
                 //Query to get the lists from the database
-                $sql2 = "SELECT * FROM ToDoList.list";
+                $sql3 = "SELECT * FROM ToDoList.list";
 
                 //Execute the query
-                $result2 = mysqli_query($conn2, $sql2);
+                $result3 = mysqli_query($conn3, $sql3);
 
                 //Check whether the query executed or not
-                if ($result2 == true) {
+                if ($result3 == true) {
                     //Display the list in menu
-                    while ($row2 = mysqli_fetch_assoc($result2)) {
-                        $list_id = $row2['list_id'];
-                        $list_name = $row2['list_name'];
+                    while ($row3 = mysqli_fetch_assoc($result3)) {
+                        $list_id = $row3['list_id'];
+                        $list_name = $row3['list_name'];
                         ?>
 
                         <li class="nav-item ">
-                            <a class="nav-link" href="../listTask.php?list_id=<?php echo $list_id;?>"><?php echo $list_name ?></a>
+                            <a class="nav-link"
+                               href="../listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
                         </li>
 
                         <?php
@@ -182,16 +186,17 @@ task_id = $task_id";
 
 </p>
 <!-- Form To Update List Starts Here -->
+<div class="form">
 <form method="POST" action="">
     <div class="form-group">
-        <p style="margin-left: 0.5vw">List Name:</p>
+        <p>Task Name:</p>
         <label style="width: 15vw">
             <input type="text" name="task_name" class="form-control" value="<?php echo $task_name ?>"
                    placeholder="Enter task name">
         </label>
     </div>
     <div class="form-group">
-        <p>List Description:</p>
+        <p>Task Description:</p>
         <label style="width: 15vw">
             <input type="text" name="task_description" class="form-control" value="<?php echo $task_description ?>"
                    placeholder="Enter task name">
@@ -202,46 +207,36 @@ task_id = $task_id";
         <label>
             <select class="form-control" id="exampleFormControlSelect1" name="list_id">
                 <?php
-                //Database connection
-                $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+                $connection = mysqli_connect('localhost', 'root', 'mysql');
+                $database_select = mysqli_select_db($connection, 'todolist');
+                $query = "SELECT * FROM todolist.list";
+                $res = mysqli_query($connection, $query);
 
-                //Select Database
-                $db_select2 = mysqli_select_db($conn2, 'ToDoList');
+                if ($res == true) {
+                $rows_counter = mysqli_num_rows($res);
 
-                //Select all from list
-                $sql2 = "SELECT * FROM todolist.list";
-
-                //Execute The Query
-                $result2 = mysqli_query($conn2, $sql2);
-
-                //Check whether the query is executed or not
-                if ($result2 == true) {
-                //Create a variable to count rows
-                $count_rows2 = mysqli_num_rows($result2);
-
-                //If there is data in the database then display all in dropdowns. Else display none as option
-                if ($count_rows2 > 0) {
-                    //Display all the tasks on dropdown from database
-                    while ($row3 = mysqli_fetch_assoc($result2)) {
-                        $list_id_db = $row3['list_id'];
-                        $list_name = $row3['list_name'];
+                if ($rows_counter > 0) {
+                    while ($rows = mysqli_fetch_assoc($res)) {
+                        $list_id_db = $rows['list_id'];
+                        $list_name = $rows['list_name'];
 
                         ?>
-                        <option <?php if ($list_id_db == $list_id) {
-                            echo "selected = 'selected'";
-                        } ?> value="<?php echo $list_id_db; ?>"><?php echo $list_name; ?></option>
+
+                        <option <?php if ($list_id_db == $list_id) {echo "selected='selected'";} ?>value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
+
                         <?php
                     }
+
                 } else {
-                    //Display none as option
+                    //Else Show a Message, That There Is No Data In The Database
                     ?>
-                    <option <?php if ($list_id = 0) {
-                        echo "selected = 'selected'";
-                    } ?> value="0">None
-                    </option>
+                    <!-- Makes 1 column out of different columns -->
+                    <tr>
+                        <td colspan="3">No List Added Yet.</td>
+                    </tr>
+
                     <?php
                 }
-
                 ?>
             </select>
         </label>
@@ -261,7 +256,7 @@ task_id = $task_id";
                 <option <?php if ($priority == "Low") {
                     echo "selected = 'selected'";
                 } ?> value="Low">Low
-                </option> <?php ?>
+                </option>
             </select>
         </label>
     </div>
@@ -280,8 +275,12 @@ task_id = $task_id";
 
     <button type="submit" name="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
+
+
 <?php } ?>
 <!-- Form To Update List Ends Here -->
+
 
 </body>
 </html>
