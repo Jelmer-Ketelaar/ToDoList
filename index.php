@@ -30,7 +30,7 @@ session_start();
 <body>
 <!-- Navbar starts here -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" style="cursor: auto">Home Page</a>
+    <a class="navbar-brand" href="#" style="cursor: auto">Manage Tasks Page</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -75,7 +75,7 @@ session_start();
 <!-- Navbar ends here -->
 
 <h1>ToDoList</h1>
-<p>
+<p class="session">
     <?php
 
     //Checks whether the session is created or not
@@ -196,6 +196,7 @@ session_start();
                     <td colspan="3">No List Added Yet.</td>
                 </tr>
 
+
                 <?php
             }
             }
@@ -207,6 +208,5 @@ session_start();
 </div>
 
 
-</div>
 </body>
 </html>

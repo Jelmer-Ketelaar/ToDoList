@@ -32,7 +32,7 @@ $list_id_url = $_GET['list_id'];
 <body>
 <!-- Navbar starts here -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" style="cursor: auto">Home Page</a>
+    <a class="navbar-brand" href="#" style="cursor: auto">Manage Tasks</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
