@@ -73,7 +73,7 @@ function Query($sql)
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" style="cursor: auto">Update Task Page</a>
+    <a class="navbar-brand" href="#" style="cursor: auto">Add List Page</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -81,7 +81,7 @@ function Query($sql)
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="../index.php">Home</a>
+                <a class="nav-link" href="../index.php">Manage Tasks</a>
             </li>
         </ul>
 
@@ -93,20 +93,20 @@ function Query($sql)
 
                 <?php
                 //Connect to database
-                $conn3 = mysqli_connect('localhost', 'root', 'mysql');
+                $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
                 //Query to get the lists from the database
-                $sql3 = "SELECT * FROM ToDoList.list";
+                $sql2 = "SELECT * FROM ToDoList.list";
 
                 //Execute the query
-                $result3 = mysqli_query($conn3, $sql3);
+                $result2 = mysqli_query($conn2, $sql2);
 
                 //Check whether the query executed or not
-                if ($result3 == true) {
+                if ($result2 == true) {
                     //Display the list in menu
-                    while ($row3 = mysqli_fetch_assoc($result3)) {
-                        $list_id = $row3['list_id'];
-                        $list_name = $row3['list_name'];
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        $list_id = $row2['list_id'];
+                        $list_name = $row2['list_name'];
                         ?>
 
                         <li class="nav-item ">
@@ -122,37 +122,7 @@ function Query($sql)
         </div>
     </div>
 </nav>
-<a>
-    <?php
-    //Connect to database
-    $conn6 = mysqli_connect('localhost', 'root', 'mysql');
 
-    $db_select7 = mysqli_select_db($conn6, 'todolist');
-
-    //Query to get the lists from the database
-    $sql8 = "SELECT * FROM ToDoList.status";
-
-    //Execute the query
-    $result8 = mysqli_query($conn6, $sql8);
-
-    //Check whether the query executed or not
-    if ($result8 == true) {
-        //Display the list in menu
-        while ($row5 = mysqli_fetch_assoc($result8)) {
-            $status_id = $row5['status_id'];
-            $status_name = $row5['status_name'];
-            ?>
-
-            <li class="nav-item ">
-                <a class="nav-link"
-                   href="../listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
-            </li>
-
-            <?php
-        }
-    }
-    ?>
-</a>
 <h1>ToDoList</h1>
 <p>
     <?php
