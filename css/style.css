@@ -11,3 +11,16 @@ form {
     margin: 20px;
 }
 
+table {
+    width: 98% !important;
+    margin: 20px;
+}
+
+.btn {
+    margin: 20px;
+}
+
+.session {
+    margin: 20px;
+    background-color: green;
+}
