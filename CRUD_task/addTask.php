@@ -195,6 +195,18 @@ deadline = '$deadline'";
             ?>
             </select>
         </label>
+        <div class="form-box">
+            <!-- Form To Add List Starts Here -->
+            <form method="POST" action="">
+                <div class="form-group">
+                    <p>List Name:</p>
+                    <label style="width: 15vw">
+                        <input type="text" name="list_name" class="form-control" placeholder="Enter list name" required>
+                    </label>
+                    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="form-group">
         <p>Priority:</p>
