@@ -152,48 +152,47 @@ deadline = '$deadline'";
     <div class="form-group">
         <p>Select List:</p>
         <label>
-            <select class="form-control" id="exampleFormControlSelect1" name="list_id">
-                <?php
-                //Database connection
-                $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+            <select class="form-control" id="Select" name="list_id">
+            <?php
+            //Database connection
+            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
-                //Select Database
-                $db_select2 = mysqli_select_db($conn2, 'ToDoList');
+            //Select Database
+            $db_select2 = mysqli_select_db($conn2, 'ToDoList');
 
-                //Select all from list
-                $sql2 = "SELECT * FROM todolist.list";
+            //Select all from list
+            $sql2 = "SELECT * FROM todolist.list";
 
-                //Execute The Query
-                $result2 = mysqli_query($conn2, $sql2);
+            //Execute The Query
+            $result2 = mysqli_query($conn2, $sql2);
 
-                //Check whether the query is executed or not
-                if ($result2 == true) {
-                    //Create a variable to count rows
-                    $count_rows2 = mysqli_num_rows($result2);
+            //Check whether the query is executed or not
+            if ($result2 == true) {
+                //Create a variable to count rows
+                $count_rows2 = mysqli_num_rows($result2);
+                //If there is data in the database then display all in dropdowns. Else display none as option
+                if ($count_rows2 > 0) {
+                    //Display all the tasks on dropdown from database
+                    while ($row3 = mysqli_fetch_assoc($result2)) {
+                        $list_id = $row3['list_id'];
+                        $list_name = $row3['list_name'];
 
-                    //If there is data in the database then display all in dropdowns. Else display none as option
-                    if ($count_rows2 > 0) {
-                        //Display all the tasks on dropdown from database
-                        while ($row3 = mysqli_fetch_assoc($result2)) {
-                            $list_id = $row3['list_id'];
-                            $list_name = $row3['list_name'];
-
-                            ?>
-                            <option value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
-                            <?php
-                        }
-                    } else {
-                        //Display none as option
                         ?>
-                        <option <?php if ($list_id = 0) {
-                            echo "selected = 'selected'";
-                        } ?> value="0">None
-                        </option>
+                        <option value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
                         <?php
                     }
+                } else {
+                    //Display none as option
+                    ?>
+                    <option <?php if ($list_id = 0) {
+                        echo "selected = 'selected'";
+                    } ?> value="0">None
+                    </option>
+                    <?php
                 }
+            }
 
-                ?>
+            ?>
             </select>
         </label>
     </div>
@@ -230,8 +229,9 @@ deadline = '$deadline'";
     </div>
 
     <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-    </div>
+
 </form>
+</div>
 <!-- Form To Add List Ends Here -->
 </body>
 </html>
