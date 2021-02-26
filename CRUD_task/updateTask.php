@@ -11,7 +11,7 @@ if (isset($_GET['task_id'])) {
     $conn = mysqli_connect('localhost', 'root', 'mysql');
 
 //Select Database
-    $db_select = mysqli_select_db($conn, 'ToDoList');
+    $db_select = mysqli_select_db($conn, 'todolist');
 
 //Select all from list
     $sql = "SELECT * FROM todolist.task WHERE task_id = $task_id";
@@ -63,15 +63,15 @@ if (isset($_POST['submit'])) {
     $db_select2 = mysqli_select_db($conn2, 'ToDoList');
 
     //Select all from list
-    $sql2 = "UPDATE ToDoList.task SET
-task_name = '$task_name',
-task_description = '$task_description',
-list_id = '$list_id',
-priority = '$priority',
-begin_date = '$begin_date',
-deadline = '$deadline'
-WHERE
-task_id = $task_id";
+    $sql2 = "UPDATE todolist.task SET
+            task_name = '$task_name',
+            task_description = '$task_description',
+            list_id = '$list_id',
+            priority = '$priority',
+            begin_date = '$begin_date',
+            deadline = '$deadline'
+            WHERE
+            task_id = $task_id";
 
     //Execute the query
     $result2 = mysqli_query($conn2, $sql2);
@@ -121,165 +121,182 @@ task_id = $task_id";
 </head>
 <body>
 <div>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" style="cursor: auto">Update Task Page</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="../index.php">Home</a>
-            </li>
-        </ul>
-
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#" style="cursor: auto">Update Task Page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="../manageList.php">Manage Lists</a>
+                    <a class="nav-link" href="../index.php">Manage Tasks</a>
                 </li>
-
-                <?php
-                //Connect to database
-                $conn3 = mysqli_connect('localhost', 'root', 'mysql');
-
-                //Query to get the lists from the database
-                $sql3 = "SELECT * FROM ToDoList.list";
-
-                //Execute the query
-                $result3 = mysqli_query($conn3, $sql3);
-
-                //Check whether the query executed or not
-                if ($result3 == true) {
-                    //Display the list in menu
-                    while ($row3 = mysqli_fetch_assoc($result3)) {
-                        $list_id = $row3['list_id'];
-                        $list_name = $row3['list_name'];
-                        ?>
-
-                        <li class="nav-item ">
-                            <a class="nav-link"
-                               href="../listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
-                        </li>
-
-                        <?php
-                    }
-                }
-                ?>
             </ul>
-        </div>
-    </div>
-</nav>
-<h1 class="title">ToDoList</h1>
 
-<p>
-
-    <?php
-    //Check whether the session is set or not
-    if (isset($_SESSION['update_fail'])) {
-
-        echo $_SESSION['update_fail'];
-        unset ($_SESSION['update_fail']);
-    }
-    ?>
-
-</p>
-<!-- Form To Update List Starts Here -->
-<div class="form">
-<form method="POST" action="">
-    <div class="form-group">
-        <p>Task Name:</p>
-        <label style="width: 15vw">
-            <input type="text" name="task_name" class="form-control" value="<?php echo $task_name ?>"
-                   placeholder="Enter task name">
-        </label>
-    </div>
-    <div class="form-group">
-        <p>Task Description:</p>
-        <label style="width: 15vw">
-            <input type="text" name="task_description" class="form-control" value="<?php echo $task_description ?>"
-                   placeholder="Enter task name">
-        </label>
-    </div>
-    <div class="form-group">
-        <p>Select List:</p>
-        <label>
-            <select class="form-control" id="exampleFormControlSelect1" name="list_id">
-                <?php
-                $connection = mysqli_connect('localhost', 'root', 'mysql');
-                $database_select = mysqli_select_db($connection, 'todolist');
-                $query = "SELECT * FROM todolist.list";
-                $res = mysqli_query($connection, $query);
-
-                if ($res == true) {
-                $rows_counter = mysqli_num_rows($res);
-
-                if ($rows_counter > 0) {
-                    while ($rows = mysqli_fetch_assoc($res)) {
-                        $list_id_db = $rows['list_id'];
-                        $list_name = $rows['list_name'];
-
-                        ?>
-
-                        <option <?php if ($list_id_db == $list_id) {echo "selected='selected'";} ?>value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
-
-                        <?php
-                    }
-
-                } else {
-                    //Else Show a Message, That There Is No Data In The Database
-                    ?>
-                    <!-- Makes 1 column out of different columns -->
-                    <tr>
-                        <td colspan="3">No List Added Yet.</td>
-                    </tr>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../manageList.php">Manage Lists</a>
+                    </li>
 
                     <?php
-                }
-                ?>
-            </select>
-        </label>
-    </div>
-    <div class="form-group">
-        <p>Priority:</p>
-        <label>
-            <select class="form-select" aria-label="Default select example" name="priority">
-                <option <?php if ($priority == "High") {
-                    echo "selected = 'selected'";
-                } ?> value="High">High
-                </option>
-                <option <?php if ($priority == "Medium") {
-                    echo "selected = 'selected'";
-                } ?> value="Medium">Medium
-                </option>
-                <option <?php if ($priority == "Low") {
-                    echo "selected = 'selected'";
-                } ?> value="Low">Low
-                </option>
-            </select>
-        </label>
-    </div>
-    <div class="form-group">
-        <p>Begin Date:</p>
-        <label>
-            <input type="date" name="begin_date" value="<?php echo $begin_date; ?>">
-        </label>
-    </div>
-    <div class="form-group">
-        <p>Deadline:</p>
-        <label>
-            <input type="date" name="deadline" value="<?php echo $deadline; ?>">
-        </label>
+                    //Connect to database
+                    $conn3 = mysqli_connect('localhost', 'root', 'mysql');
+
+                    //Query to get the lists from the database
+                    $sql3 = "SELECT * FROM todolist.list";
+
+                    //Execute the query
+                    $result3 = mysqli_query($conn3, $sql3);
+
+                    //Check whether the query executed or not
+                    if ($result3 == true) {
+                        //Display the list in menu
+                        while ($row3 = mysqli_fetch_assoc($result3)) {
+                            $list_id_nav= $row3['list_id'];
+                            $list_name = $row3['list_name'];
+                            ?>
+
+                            <li class="nav-item ">
+                                <a class="nav-link"
+                                   href="../listTask.php?list_id=<?php echo $list_id_nav; ?>"><?php echo $list_name; ?></a>
+                            </li>
+
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 class="title">ToDoList</h1>
+
+    <p>
+
+        <?php
+        //Check whether the session is set or not
+        if (isset($_SESSION['update_fail'])) {
+
+            echo $_SESSION['update_fail'];
+            unset ($_SESSION['update_fail']);
+        }
+        ?>
+
+    </p>
+    <!-- Form To Update List Starts Here -->
+    <div class="form">
+        <form method="POST" action="">
+            <div class="form-group">
+                <p>Task Name:</p>
+                <label style="width: 15vw">
+                    <input type="text" name="task_name" class="form-control" value="<?php echo $task_name ?>"
+                           placeholder="Enter task name">
+                </label>
+            </div>
+            <div class="form-group">
+                <p>Task Description:</p>
+                <label style="width: 15vw">
+                    <input type="text" name="task_description" class="form-control"
+                           value="<?php echo $task_description ?>"
+                           placeholder="Enter task name">
+                </label>
+            </div>
+            <div class="form-group">
+                <p>Select List:</p>
+                <label>
+                    <select class="form-control" id="select" name="list_id">
+                        <?php
+                        $connection = mysqli_connect('localhost', 'root', 'mysql');
+                        $database_select = mysqli_select_db($connection, 'todolist');
+                        $query = "SELECT * FROM todolist.list";
+                        $res = mysqli_query($connection, $query);
+
+                        if ($res == true) {
+                        $rows_counter = mysqli_num_rows($res);
+
+                        if ($rows_counter > 0) {
+                            while ($rows = mysqli_fetch_assoc($res)) {
+                                $list_id_db = $rows['list_id'];
+                                $list_name = $rows['list_name'];
+                                ?>
+
+                                <option <?php if ($list_id_db == $list_id) {
+                                    echo 'selected="selected"';
+                                } ?>value="<?php echo $list_id_db; ?>"><?php echo $list_name; ?></option>
+
+                                <?php
+                            }
+
+                        } else {
+                            //Else Show a Message, That There Is No Data In The Database
+                            ?>
+                            <!-- Makes 1 column out of different columns -->
+                            <tr>
+                                <td colspan="3">No List Added Yet.</td>
+                            </tr>
+
+
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </label>
+
+                    <div class="form-box">
+                        <!-- Form To Add List Starts Here -->
+                        <form method="POST" action="">
+                            <div class="form-group">
+                                <p>List Name:</p>
+                                <label style="width: 15vw">
+                                    <input type="text" name="list_name" class="form-control" placeholder="Enter list name" required>
+                                </label>
+                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            <div class="form-group">
+                <p>Priority:</p>
+                <label>
+                    <select class="form-select" aria-label="Default select example" name="priority">
+                        <option <?php if ($priority == "High") {
+                            echo "selected = 'selected'";
+                        } ?> value="High">High
+                        </option>
+                        <option <?php if ($priority == "Medium") {
+                            echo "selected = 'selected'";
+                        } ?> value="Medium">Medium
+                        </option>
+                        <option <?php if ($priority == "Low") {
+                            echo "selected = 'selected'";
+                        } ?> value="Low">Low
+                        </option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <p>Begin Date:</p>
+                <label>
+                    <input type="date" name="begin_date" value="<?php echo $begin_date; ?>">
+                </label>
+            </div>
+            <div class="form-group">
+                <p>Deadline:</p>
+                <label>
+                    <input type="date" name="deadline" value="<?php echo $deadline; ?>">
+                </label>
+            </div>
+
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 
-    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-</form>
-</div>
 
-
-<?php } ?>
-<!-- Form To Update List Ends Here -->
+    <?php } ?>
+    <!-- Form To Update List Ends Here -->
 
 
 </body>
