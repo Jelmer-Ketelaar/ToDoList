@@ -1,5 +1,14 @@
 <?php
 session_start();
+$conn = mysqli_connect('localhost', 'root', 'mysql');
+//Returns the error code from last connect call
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    exit();
+}
+
+//Select Database
+$db_select = mysqli_select_db($conn, 'ToDoList');
 //Checks whether the form is submitted or not
 if (isset($_POST['submit'])) {
 
@@ -7,22 +16,8 @@ if (isset($_POST['submit'])) {
     echo $list_name = $_POST['list_name'];
 
     //SQL Query to Insert data into database
-
-    Query("INSERT INTO list SET list_name = '$list_name'");
-}
-//Connects to database
-function Query($sql)
-{
-    global $conn;
-    if (!$conn) // will only connect if connection does not exist yet
-    {
-        $dbServername = 'localhost';
-        $dbUsername = 'root';
-        $dbPassword = 'mysql';
-        $dbName = 'ToDoList';
-        $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
-    }
-
+    $sql = "INSERT INTO list SET list_name = '$list_name'";
+    
     $execute = mysqli_query($conn, $sql);
 
     if ($execute == true) {
@@ -41,6 +36,7 @@ function Query($sql)
         header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/addList.php');
     }
 }
+
 
 ?>
 
