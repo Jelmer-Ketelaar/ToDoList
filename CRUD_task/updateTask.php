@@ -1,5 +1,14 @@
 <?php
 session_start();
+$conn = mysqli_connect('localhost', 'root', 'mysql');
+//Returns the error code from last connect call
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    exit();
+}
+
+//Select Database
+$db_select = mysqli_select_db($conn, 'ToDoList');
 //Select all from list
 //Check whether the Update button is Clicked or not
 if (isset($_GET['task_id'])) {
@@ -57,10 +66,10 @@ if (isset($_POST['submit'])) {
     $deadline = $_POST['deadline'];
 
     //Database connection
-    $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+    $conn = mysqli_connect('localhost', 'root', 'mysql');
 
     //Select Database
-    $db_select2 = mysqli_select_db($conn2, 'ToDoList');
+    $db_select2 = mysqli_select_db($conn, 'ToDoList');
 
     //Select all from list
     $sql2 = "UPDATE todolist.task SET
@@ -74,7 +83,7 @@ if (isset($_POST['submit'])) {
             task_id = $task_id";
 
     //Execute the query
-    $result2 = mysqli_query($conn2, $sql2);
+    $result2 = mysqli_query($conn, $sql2);
 
     if ($result2 == true) {
         //If update is successful
@@ -209,16 +218,16 @@ if (isset($_POST['submit'])) {
                     <select class="form-control" id="Select" name="list_id">
                         <?php
                         //Database connection
-                        $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+                        $conn = mysqli_connect('localhost', 'root', 'mysql');
 
                         //Select Database
-                        $db_select2 = mysqli_select_db($conn2, 'ToDoList');
+                        $db_select2 = mysqli_select_db($conn, 'ToDoList');
 
                         //Select all from list
                         $sql2 = "SELECT * FROM todolist.list";
 
                         //Execute The Query
-                        $result2 = mysqli_query($conn2, $sql2);
+                        $result2 = mysqli_query($conn, $sql2);
 
                         //Check whether the query is executed or not
                         if ($result2 == true) {
@@ -286,8 +295,6 @@ if (isset($_POST['submit'])) {
             <button type="submit" name="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-
-
 
     <!-- Form To Update List Ends Here -->
 
