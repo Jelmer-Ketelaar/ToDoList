@@ -1,5 +1,15 @@
 <?php
 session_start();
+
+$conn = mysqli_connect('localhost', 'root', 'mysql');
+//Returns the error code from last connect call
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    exit();
+}
+
+//Select Database
+$db_select = mysqli_select_db($conn, 'ToDoList');
 ?>
 
 <!doctype html>
@@ -43,14 +53,11 @@ session_start();
             </li>
 
             <?php
-            //Connect to database
-            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
-
-            //Query to get the lists from the database
-            $sql2 = "SELECT * FROM ToDoList.list";
+            //Select all from list table
+             $sql2 = "SELECT * FROM ToDoList.list";
 
             //Execute the query
-            $result2 = mysqli_query($conn2, $sql2);
+            $result2 = mysqli_query($conn, $sql2);
 
             //Check whether the query executed or not
             if ($result2 == true) {
@@ -87,16 +94,6 @@ if (isset($_SESSION['add'])) {
     unset($_SESSION['add']);
 }
 
-//Checks whether the session is created or not
-if (isset($_SESSION['add_fail'])) {
-    ?>
-    <div class="danger">
-        <strong>Success!</strong>
-        <p> <?php echo $_SESSION['add_fail']; ?></p>
-    </div>
-    <?php
-    unset($_SESSION['add_fail']);
-}
 
 //Check whether the session is deleted or not
 if (isset($_SESSION['delete'])) {
@@ -169,18 +166,7 @@ if (isset($_SESSION['update_fail'])) {
 
 
             <?php
-            //Database connection
-            $conn = mysqli_connect('localhost', 'root', 'mysql');
-            //Returns the error code from last connect call
-            if (mysqli_connect_errno()) {
-                echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                exit();
-            }
-
-            //Select Database
-            $db_select = mysqli_select_db($conn, 'ToDoList');
-
-            //Select all from list
+             //Select all from list
             $sql = "SELECT * FROM ToDoList.task";
 
             //Execute The Query

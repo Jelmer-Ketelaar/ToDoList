@@ -1,7 +1,13 @@
 <?php
+$conn = mysqli_connect('localhost', 'root', 'mysql');
+//Returns the error code from last connect call
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    exit();
+}
 
-//get the listID value
-$list_id_url = $_GET['list_id'];
+//Select Database
+$db_select = mysqli_select_db($conn, 'ToDoList');
 
 ?>
 <!doctype html>
@@ -44,14 +50,14 @@ $list_id_url = $_GET['list_id'];
             </li>
 
             <?php
-            //Connect to database
-            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+            //get the listID value
+            $list_id_url = $_GET['list_id'];
 
             //Query to get the lists from the database
             $sql2 = "SELECT * FROM ToDoList.list";
 
             //Execute the query
-            $result2 = mysqli_query($conn2, $sql2);
+            $result2 = mysqli_query($conn, $sql2);
 
             //Check whether the query executed or not
             if ($result2 == true) {
