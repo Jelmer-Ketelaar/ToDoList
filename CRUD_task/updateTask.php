@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
                     if ($result3 == true) {
                         //Display the list in menu
                         while ($row3 = mysqli_fetch_assoc($result3)) {
-                            $list_id_nav= $row3['list_id'];
+                            $list_id_nav = $row3['list_id'];
                             $list_name = $row3['list_name'];
                             ?>
 
@@ -206,57 +206,50 @@ if (isset($_POST['submit'])) {
             <div class="form-group">
                 <p>Select List:</p>
                 <label>
-                    <select class="form-control" id="select" name="list_id">
+                    <select class="form-control" id="Select" name="list_id">
                         <?php
-                        $connection = mysqli_connect('localhost', 'root', 'mysql');
-                        $database_select = mysqli_select_db($connection, 'todolist');
-                        $query = "SELECT * FROM todolist.list";
-                        $res = mysqli_query($connection, $query);
+                        //Database connection
+                        $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
-                        if ($res == true) {
-                        $rows_counter = mysqli_num_rows($res);
+                        //Select Database
+                        $db_select2 = mysqli_select_db($conn2, 'ToDoList');
 
-                        if ($rows_counter > 0) {
-                            while ($rows = mysqli_fetch_assoc($res)) {
-                                $list_id_db = $rows['list_id'];
-                                $list_name = $rows['list_name'];
+                        //Select all from list
+                        $sql2 = "SELECT * FROM todolist.list";
+
+                        //Execute The Query
+                        $result2 = mysqli_query($conn2, $sql2);
+
+                        //Check whether the query is executed or not
+                        if ($result2 == true) {
+                            //Create a variable to count rows
+                            $count_rows2 = mysqli_num_rows($result2);
+                            //If there is data in the database then display all in dropdowns. Else display none as option
+                            if ($count_rows2 > 0) {
+                                //Display all the tasks on dropdown from database
+                                while ($row3 = mysqli_fetch_assoc($result2)) {
+                                    $list_id = $row3['list_id'];
+                                    $list_name = $row3['list_name'];
+
+                                    ?>
+                                    <option value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
+                                    <?php
+                                }
+                            } else {
+                                //Display none as option
                                 ?>
-
-                                <option <?php if ($list_id_db == $list_id) {
-                                    echo 'selected="selected"';
-                                } ?>value="<?php echo $list_id_db; ?>"><?php echo $list_name; ?></option>
-
+                                <option <?php if ($list_id = 0) {
+                                    echo "selected = 'selected'";
+                                } ?> value="0">None
+                                </option>
                                 <?php
                             }
-
-                        } else {
-                            //Else Show a Message, That There Is No Data In The Database
-                            ?>
-                            <!-- Makes 1 column out of different columns -->
-                            <tr>
-                                <td colspan="3">No List Added Yet.</td>
-                            </tr>
-
-
-                            <?php
                         }
+
                         ?>
                     </select>
                 </label>
-
-                    <div class="form-box">
-                        <!-- Form To Add List Starts Here -->
-                        <form method="POST" action="">
-                            <div class="form-group">
-                                <p>List Name:</p>
-                                <label style="width: 15vw">
-                                    <input type="text" name="list_name" class="form-control" placeholder="Enter list name" required>
-                                </label>
-                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            </div>
 
             <div class="form-group">
                 <p>Priority:</p>
@@ -295,7 +288,7 @@ if (isset($_POST['submit'])) {
     </div>
 
 
-    <?php } ?>
+
     <!-- Form To Update List Ends Here -->
 
 
