@@ -83,38 +83,39 @@ deadline = '$deadline'";
                 <a class="nav-link" href="../index.php">Home</a>
             </li>
             <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="../manageList.php">Manage Lists</a>
-            </li>
-            <?php
-            //Connect to database
-            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
-
-            //Query to get the lists from the database
-            $sql2 = "SELECT * FROM ToDoList.list";
-
-            //Execute the query
-            $result2 = mysqli_query($conn2, $sql2);
-
-            //Check whether the query executed or not
-            if ($result2 == true) {
-                //Display the list in menu
-                while ($row2 = mysqli_fetch_assoc($result2)) {
-                    $list_id = $row2['list_id'];
-                    $list_name = $row2['list_name'];
-                    ?>
-
-                    <li class="nav-item ">
-                        <a class="nav-link" href="../listTask.php?list_id=<?php echo $list_id;?>"><?php echo $list_name ?></a>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../manageList.php">Manage Lists</a>
                     </li>
-
                     <?php
-                }
-            }
-            ?>
-        </ul>
-    </div>
+                    //Connect to database
+                    $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+
+                    //Query to get the lists from the database
+                    $sql2 = "SELECT * FROM ToDoList.list";
+
+                    //Execute the query
+                    $result2 = mysqli_query($conn2, $sql2);
+
+                    //Check whether the query executed or not
+                    if ($result2 == true) {
+                        //Display the list in menu
+                        while ($row2 = mysqli_fetch_assoc($result2)) {
+                            $list_id = $row2['list_id'];
+                            $list_name = $row2['list_name'];
+                            ?>
+
+                            <li class="nav-item ">
+                                <a class="nav-link"
+                                   href="../listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
+                            </li>
+
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
 </nav>
 <h1>ToDoList</h1>
 
@@ -134,115 +135,103 @@ deadline = '$deadline'";
     ?>
 </p>
 <div class="form">
-<form method="POST" action="">
-    <div class="form-group">
-        <p>List Name:</p>
-        <label style="width: 15vw">
-            <input type="text" name="task_name" class="form-control" value="<?php echo $task_name ?>"
-                   placeholder="Enter task name" required>
-        </label>
-    </div>
-    <div class="form-group">
-        <p>List Description:</p>
-        <label style="width: 15vw">
-            <input type="text" name="task_description" class="form-control" value="<?php echo $task_description ?>"
-                   placeholder="Enter task name">
-        </label>
-    </div>
-    <div class="form-group">
-        <p>Select List:</p>
-        <label>
-            <select class="form-control" id="Select" name="list_id">
-            <?php
-            //Database connection
-            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
-
-            //Select Database
-            $db_select2 = mysqli_select_db($conn2, 'ToDoList');
-
-            //Select all from list
-            $sql2 = "SELECT * FROM todolist.list";
-
-            //Execute The Query
-            $result2 = mysqli_query($conn2, $sql2);
-
-            //Check whether the query is executed or not
-            if ($result2 == true) {
-                //Create a variable to count rows
-                $count_rows2 = mysqli_num_rows($result2);
-                //If there is data in the database then display all in dropdowns. Else display none as option
-                if ($count_rows2 > 0) {
-                    //Display all the tasks on dropdown from database
-                    while ($row3 = mysqli_fetch_assoc($result2)) {
-                        $list_id = $row3['list_id'];
-                        $list_name = $row3['list_name'];
-
-                        ?>
-                        <option value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
-                        <?php
-                    }
-                } else {
-                    //Display none as option
-                    ?>
-                    <option <?php if ($list_id = 0) {
-                        echo "selected = 'selected'";
-                    } ?> value="0">None
-                    </option>
-                    <?php
-                }
-            }
-
-            ?>
-            </select>
-        </label>
-        <div class="form-box">
-            <!-- Form To Add List Starts Here -->
-            <form method="POST" action="">
-                <div class="form-group">
-                    <p>List Name:</p>
-                    <label style="width: 15vw">
-                        <input type="text" name="list_name" class="form-control" placeholder="Enter list name" required>
-                    </label>
-                    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
+    <form method="POST" action="">
+        <div class="form-group">
+            <p>List Name:</p>
+            <label style="width: 15vw">
+                <input type="text" name="task_name" class="form-control" value="<?php echo $task_name ?>"
+                       placeholder="Enter task name" required>
+            </label>
         </div>
-    </div>
-    <div class="form-group">
-        <p>Priority:</p>
-        <label>
-            <select class="form-select" aria-label="Default select example" name="priority">
-                <option <?php if ($priority == "High") {
-                    echo "selected = 'selected'";
-                } ?> value="High">High
-                </option>
-                <option <?php if ($priority == "Medium") {
-                    echo "selected = 'selected'";
-                } ?> value="Medium">Medium
-                </option>
-                <option <?php if ($priority == "Low") {
-                    echo "selected = 'selected'";
-                } ?> value="Low">Low
-                </option> <?php ?>
-            </select>
-        </label>
-    </div>
-    <div class="form-group">
-        <p>Begin Date:</p>
-        <label>
-            <input type="date" name="begin_date">
-        </label>
-    </div>
-    <div class="form-group">
-        <p>Deadline:</p>
-        <label>
-            <input type="date" name="deadline">
-        </label>
-    </div>
+        <div class="form-group">
+            <p>List Description:</p>
+            <label style="width: 15vw">
+                <input type="text" name="task_description" class="form-control" value="<?php echo $task_description ?>"
+                       placeholder="Enter task name">
+            </label>
+        </div>
+        <div class="form-group">
+            <p>Select List:</p>
+            <label>
+                <select class="form-control" id="Select" name="list_id">
+                    <?php
+                    //Database connection
+                    $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
-    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                    //Select Database
+                    $db_select2 = mysqli_select_db($conn2, 'ToDoList');
 
-</form>
+                    //Select all from list
+                    $sql2 = "SELECT * FROM todolist.list";
+
+                    //Execute The Query
+                    $result2 = mysqli_query($conn2, $sql2);
+
+                    //Check whether the query is executed or not
+                    if ($result2 == true) {
+                        //Create a variable to count rows
+                        $count_rows2 = mysqli_num_rows($result2);
+                        //If there is data in the database then display all in dropdowns. Else display none as option
+                        if ($count_rows2 > 0) {
+                            //Display all the tasks on dropdown from database
+                            while ($row3 = mysqli_fetch_assoc($result2)) {
+                                $list_id = $row3['list_id'];
+                                $list_name = $row3['list_name'];
+
+                                ?>
+                                <option value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
+                                <?php
+                            }
+                        } else {
+                            //Display none as option
+                            ?>
+                            <option <?php if ($list_id = 0) {
+                                echo "selected = 'selected'";
+                            } ?> value="0">None
+                            </option>
+                            <?php
+                        }
+                    }
+
+                    ?>
+                </select>
+            </label>
+        </div>
+        <div class="form-group">
+            <p>Priority:</p>
+            <label>
+                <select class="form-control" aria-label="Default select example" name="priority">
+                    <option <?php if ($priority == "High") {
+                        echo "selected = 'selected'";
+                    } ?> value="High">High
+                    </option>
+                    <option <?php if ($priority == "Medium") {
+                        echo "selected = 'selected'";
+                    } ?> value="Medium">Medium
+                    </option>
+                    <option <?php if ($priority == "Low") {
+                        echo "selected = 'selected'";
+                    } ?> value="Low">Low
+                    </option> <?php ?>
+                </select>
+            </label>
+        </div>
+        <div class="form-group">
+            <p>Begin Date:</p>
+            <label>
+                <input class="form-control" type="date" name="begin_date">
+            </label>
+        </div>
+        <div class="form-group">
+            <p>Deadline:</p>
+            <label>
+                <input class="form-control" type="date" name="deadline">
+            </label>
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+
+    </form>
 </div>
 <!-- Form To Add List Ends Here -->
 </body>
