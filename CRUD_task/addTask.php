@@ -1,5 +1,15 @@
 <?php
 session_start();
+$conn = mysqli_connect('localhost', 'root', 'mysql');
+//Returns the error code from last connect call
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    exit();
+}
+
+//Select Database
+$db_select = mysqli_select_db($conn, 'ToDoList');
+
 //Checks whether the form is submitted or not
 if (isset($_POST['submit'])) {
     //Get the values from form and save it in variables
@@ -10,19 +20,15 @@ if (isset($_POST['submit'])) {
     $begin_date = $_POST['begin_date'];
     $deadline = $_POST['deadline'];
 
-//Connects to database
-    $conn = mysqli_connect('localhost', 'root', 'mysql');
-
-    $select_db = mysqli_select_db($conn, 'ToDoList');
 
     //SQL Query to Insert data into database
-    echo $sql = "INSERT INTO ToDoList.task SET 
-task_name = '$task_name',
-task_description = '$task_description',
-list_id = '$list_id',
-priority = '$priority',
-begin_date = '$begin_date',
-deadline = '$deadline'";
+     $sql = "INSERT INTO ToDoList.task SET 
+    task_name = '$task_name',
+    task_description = '$task_description',
+    list_id = '$list_id',
+    priority = '$priority',    
+    begin_date = '$begin_date',
+    deadline = '$deadline'";
 
 
     $execute = mysqli_query($conn, $sql);
@@ -88,14 +94,11 @@ deadline = '$deadline'";
                         <a class="nav-link" href="../manageList.php">Manage Lists</a>
                     </li>
                     <?php
-                    //Connect to database
-                    $conn2 = mysqli_connect('localhost', 'root', 'mysql');
-
                     //Query to get the lists from the database
                     $sql2 = "SELECT * FROM ToDoList.list";
 
                     //Execute the query
-                    $result2 = mysqli_query($conn2, $sql2);
+                    $result2 = mysqli_query($conn, $sql2);
 
                     //Check whether the query executed or not
                     if ($result2 == true) {
@@ -118,35 +121,30 @@ deadline = '$deadline'";
             </div>
 </nav>
 <h1>ToDoList</h1>
-
-<p>
-    <?php
-
-    //Checks whether the session is created or not
-    if (isset($_SESSION['add_fail'])) {
-
-        //Displays session message
-        echo $_SESSION['add_fail'];
-
-        //Removes the message after displaying once
-        unset($_SESSION['add_fail']);
-    }
-
+<?php
+//Checks whether the session is created or not
+if (isset($_SESSION['add_fail'])) {
     ?>
-</p>
+    <div class="danger">
+        <strong>Watch out!</strong>
+        <p> <?php echo $_SESSION['add_fail']; ?></p>
+    </div>
+    <?php
+    unset($_SESSION['add_fail']);
+} ?>
 <div class="form">
     <form method="POST" action="">
         <div class="form-group">
             <p>List Name:</p>
             <label style="width: 15vw">
-                <input type="text" name="task_name" class="form-control" value="<?php echo $task_name ?>"
+                <input type="text" name="task_name" class="form-control"
                        placeholder="Enter task name" required>
             </label>
         </div>
         <div class="form-group">
             <p>List Description:</p>
             <label style="width: 15vw">
-                <input type="text" name="task_description" class="form-control" value="<?php echo $task_description ?>"
+                <input type="text" name="task_description" class="form-control"
                        placeholder="Enter task name">
             </label>
         </div>
@@ -156,16 +154,16 @@ deadline = '$deadline'";
                 <select class="form-control" id="Select" name="list_id">
                     <?php
                     //Database connection
-                    $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+                    $con = mysqli_connect('localhost', 'root', 'mysql');
 
                     //Select Database
-                    $db_select2 = mysqli_select_db($conn2, 'ToDoList');
+                    $db_select2 = mysqli_select_db($conn, 'ToDoList');
 
                     //Select all from list
                     $sql2 = "SELECT * FROM todolist.list";
 
                     //Execute The Query
-                    $result2 = mysqli_query($conn2, $sql2);
+                    $result2 = mysqli_query($conn, $sql2);
 
                     //Check whether the query is executed or not
                     if ($result2 == true) {
@@ -185,9 +183,7 @@ deadline = '$deadline'";
                         } else {
                             //Display none as option
                             ?>
-                            <option <?php if ($list_id = 0) {
-                                echo "selected = 'selected'";
-                            } ?> value="0">None
+                            <option value="0">None
                             </option>
                             <?php
                         }
@@ -201,18 +197,12 @@ deadline = '$deadline'";
             <p>Priority:</p>
             <label>
                 <select class="form-control" aria-label="Default select example" name="priority">
-                    <option <?php if ($priority == "High") {
-                        echo "selected = 'selected'";
-                    } ?> value="High">High
+                    <option value="High">High
                     </option>
-                    <option <?php if ($priority == "Medium") {
-                        echo "selected = 'selected'";
-                    } ?> value="Medium">Medium
+                    <option value="Medium">Medium
                     </option>
-                    <option <?php if ($priority == "Low") {
-                        echo "selected = 'selected'";
-                    } ?> value="Low">Low
-                    </option> <?php ?>
+                    <option value="Low">Low
+                    </option>
                 </select>
             </label>
         </div>
