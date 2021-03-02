@@ -75,42 +75,76 @@ session_start();
 <!-- Navbar ends here -->
 
 <h1>ToDoList</h1>
-<p class="session">
-    <?php
-
-    //Checks whether the session is created or not
-    if (isset($_SESSION['add'])) {
-        //Displays session message
-        echo $_SESSION['add'];
-        //Removes the message after displaying once
-        unset($_SESSION['add']);
-    }
-
-    //Check whether the session is deleted or not
-    if (isset($_SESSION['delete'])) {
-        //Displays session message
-        echo($_SESSION['delete']);
-        //Removes the message after displaying once
-        unset($_SESSION['delete']);
-    }
-
-    if (isset($_SESSION['delete_fail'])) {
-        //Displays session message
-        echo $_SESSION['delete_fail'];
-        //Removes the message after displaying once
-        unset($_SESSION['delete_fail']);
-
-    }
-
-    //Check whether the session is set or not
-    if (isset($_SESSION['update'])) {
-
-        echo $_SESSION['update'];
-        unset ($_SESSION['update']);
-    }
-
+<?php
+//Checks whether the session is created or not
+if (isset($_SESSION['add'])) {
     ?>
-</p>
+    <div class="success">
+        <p><strong>Success!</strong>
+        <p><?php echo $_SESSION['add']; ?></p>
+    </div>
+    <?php
+    unset($_SESSION['add']);
+}
+
+//Checks whether the session is created or not
+if (isset($_SESSION['add_fail'])) {
+    ?>
+    <div class="danger">
+        <p><strong>Success!</strong>
+        <p><?php echo $_SESSION['add_fail']; ?></p>
+    </div>
+    <?php
+    unset($_SESSION['add_fail']);
+}
+
+//Check whether the session is deleted or not
+if (isset($_SESSION['delete'])) {
+    //Displays session message
+    ?>
+    <div class="success">
+        <p><strong>Success!</strong>
+        <?php echo($_SESSION['delete']); ?></div>
+    <?php
+    //Removes the message after displaying once
+    unset($_SESSION['delete']);
+}
+
+if (isset($_SESSION['delete_fail'])) {
+    //Displays session message
+    ?>
+    <div class="danger">
+    <p><strong>Success!</strong>
+    <?php echo($_SESSION['delete_fail']); ?></div><?php
+    //Removes the message after displaying once
+    unset($_SESSION['delete_fail']);
+
+}
+
+if (isset($_SESSION['update'])) {
+    //Displays session message
+    ?>
+    <div class="success">
+    <p><strong>Success!</strong>
+    <?php echo($_SESSION['update']); ?></div><?php
+    //Removes the message after displaying once
+    unset($_SESSION['update']);
+
+}
+
+
+if (isset($_SESSION['update_fail'])) {
+    //Displays session message
+    ?>
+    <div class="danger">
+    <p><strong>Success!</strong>
+    <?php echo($_SESSION['update_fail']); ?></div><?php
+    //Removes the message after displaying once
+    unset($_SESSION['update_fail']);
+
+}
+
+?>
 
 
 <!--Table to display lists starts here-->
