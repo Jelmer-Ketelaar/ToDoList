@@ -80,7 +80,7 @@ session_start();
 if (isset($_SESSION['add'])) {
     ?>
     <div class="success">
-        <p><strong>Success!</strong>
+        <strong>Success!</strong>
         <p><?php echo $_SESSION['add']; ?></p>
     </div>
     <?php
@@ -91,8 +91,8 @@ if (isset($_SESSION['add'])) {
 if (isset($_SESSION['add_fail'])) {
     ?>
     <div class="danger">
-        <p><strong>Success!</strong>
-        <p><?php echo $_SESSION['add_fail']; ?></p>
+        <strong>Success!</strong>
+        <p> <?php echo $_SESSION['add_fail']; ?></p>
     </div>
     <?php
     unset($_SESSION['add_fail']);
@@ -103,8 +103,9 @@ if (isset($_SESSION['delete'])) {
     //Displays session message
     ?>
     <div class="success">
-        <p><strong>Success!</strong>
-        <?php echo($_SESSION['delete']); ?></div>
+        <strong>Success!</strong>
+        <p><?php echo($_SESSION['delete']); ?></p>
+    </div>
     <?php
     //Removes the message after displaying once
     unset($_SESSION['delete']);
@@ -114,8 +115,9 @@ if (isset($_SESSION['delete_fail'])) {
     //Displays session message
     ?>
     <div class="danger">
-    <p><strong>Success!</strong>
-    <?php echo($_SESSION['delete_fail']); ?></div><?php
+    <strong>Success!</strong>
+    <p><?php echo($_SESSION['delete_fail']); ?></p>
+    </div><?php
     //Removes the message after displaying once
     unset($_SESSION['delete_fail']);
 
@@ -125,8 +127,9 @@ if (isset($_SESSION['update'])) {
     //Displays session message
     ?>
     <div class="success">
-    <p><strong>Success!</strong>
-    <?php echo($_SESSION['update']); ?></div><?php
+    <strong>Success!</strong>
+    <p>  <?php echo($_SESSION['update']); ?></p>
+    </div><?php
     //Removes the message after displaying once
     unset($_SESSION['update']);
 
@@ -137,8 +140,9 @@ if (isset($_SESSION['update_fail'])) {
     //Displays session message
     ?>
     <div class="danger">
-    <p><strong>Success!</strong>
-    <?php echo($_SESSION['update_fail']); ?></div><?php
+    <strong>Success!</strong>
+    <p><?php echo($_SESSION['update_fail']); ?></p>
+    </div><?php
     //Removes the message after displaying once
     unset($_SESSION['update_fail']);
 
