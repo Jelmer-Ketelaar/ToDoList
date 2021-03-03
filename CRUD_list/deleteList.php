@@ -13,7 +13,7 @@ if (isset($_GET['list_id'])) {
 
     //Select Database
     $db_select = mysqli_select_db($conn, 'ToDoList');
-    $sql = "DELETE FROM ToDoList.list WHERE list_id = $list_id";
+    $sql = "DELETE FROM ToDoList.list WHERE list_id = $list_id ";
 
     //Execute the query
     $result = mysqli_query($conn, $sql);
