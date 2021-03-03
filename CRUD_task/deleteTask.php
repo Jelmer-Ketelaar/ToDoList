@@ -21,22 +21,19 @@ if (isset($_GET['task_id'])) {
     $result = mysqli_query($conn, $sql);
 
     //Check whether the query executed successfully or not
-    if($result == true) {
+    if ($result == true) {
         //Query Executed Successfully, which means that the list is deleted successfully
-        $_SESSION['delete'] = 'List deleted Successfully';
+        $_SESSION['delete'] = 'Task deleted Successfully';
 
         //Redirect to manage list page
-        header('location:'. 'http://localhost/Jaar-2/Blok-1/ToDoList/index.php');
+        header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/index.php');
     } else {
         //Failed to delete the list
         //Query Executed Successfully, which means that the list is deleted successfully
-        $_SESSION['delete_fail'] = 'Failed to delete the list';
+        $_SESSION['delete_fail'] = 'Failed to delete the task';
 
         //Redirect to manage list page
-        header('location:'. 'http://localhost/Jaar-2/Blok-1/ToDoList/index.php');
+        header('location:' . 'http://localhost/Jaar-2/Blok-1/ToDoList/index.php');
 
     }
-
 }
-
-
