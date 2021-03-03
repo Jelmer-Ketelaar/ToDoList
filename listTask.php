@@ -38,7 +38,7 @@ $db_select = mysqli_select_db($conn, 'ToDoList');
 <body>
 <!-- Navbar starts here -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" style="cursor: auto">Manage Tasks</a>
+    <a class="navbar-brand" href="#" style="cursor: auto">List Tasks</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -47,6 +47,9 @@ $db_select = mysqli_select_db($conn, 'ToDoList');
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="manageList.php">Manage Lists</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.php">Manage Tasks</a>
             </li>
 
             <?php
