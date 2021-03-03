@@ -36,40 +36,40 @@ session_start();
         <span class="navbar-toggler-icon"></span>
     </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Manage Tasks</a>
-                </li>
-                <?php
-                //Connect to database
-                $conn2 = mysqli_connect('localhost', 'root', 'mysql');
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.php">Manage Tasks</a>
+            </li>
+            <?php
+            //Connect to database
+            $conn2 = mysqli_connect('localhost', 'root', 'mysql');
 
-                //Query to get the lists from the database
-                $sql2 = "SELECT * FROM ToDoList.list";
+            //Query to get the lists from the database
+            $sql2 = "SELECT * FROM ToDoList.list";
 
-                //Execute the query
-                $result2 = mysqli_query($conn2, $sql2);
+            //Execute the query
+            $result2 = mysqli_query($conn2, $sql2);
 
-                //Check whether the query executed or not
-                if ($result2 == true) {
-                    //Display the list in menu
-                    while ($row2 = mysqli_fetch_assoc($result2)) {
-                        $list_id = $row2['list_id'];
-                        $list_name = $row2['list_name'];
-                        ?>
+            //Check whether the query executed or not
+            if ($result2 == true) {
+                //Display the list in menu
+                while ($row2 = mysqli_fetch_assoc($result2)) {
+                    $list_id = $row2['list_id'];
+                    $list_name = $row2['list_name'];
+                    ?>
 
-                        <li class="nav-item ">
-                            <a class="nav-link"
-                               href="listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
-                        </li>
+                    <li class="nav-item ">
+                        <a class="nav-link"
+                           href="listTask.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name ?></a>
+                    </li>
 
-                        <?php
-                    }
+                    <?php
                 }
-                ?>
-            </ul>
-        </div>
+            }
+            ?>
+        </ul>
+    </div>
 </nav>
 
 <!-- Navbar ends here -->
@@ -80,7 +80,7 @@ session_start();
 if (isset($_SESSION['add'])) {
     ?>
     <div class="success">
-        <p><strong>Success!</strong>
+        <strong>Success!</strong>
         <p><?php echo $_SESSION['add']; ?></p>
     </div>
     <?php
@@ -91,7 +91,7 @@ if (isset($_SESSION['add'])) {
 if (isset($_SESSION['add_fail'])) {
     ?>
     <div class="danger">
-        <p><strong>Success!</strong>
+        <strong>Success!</strong>
         <p><?php echo $_SESSION['add_fail']; ?></p>
     </div>
     <?php
@@ -103,8 +103,8 @@ if (isset($_SESSION['delete'])) {
     //Displays session message
     ?>
     <div class="success">
-        <p><strong>Success!</strong>
-        <?php echo($_SESSION['delete']); ?></div>
+        <strong>Success!</strong>
+        <p><?php echo($_SESSION['delete']); ?></div>
     <?php
     //Removes the message after displaying once
     unset($_SESSION['delete']);
@@ -114,8 +114,8 @@ if (isset($_SESSION['delete_fail'])) {
     //Displays session message
     ?>
     <div class="danger">
-    <p><strong>Success!</strong>
-    <?php echo($_SESSION['delete_fail']); ?></div><?php
+    <strong>Error!</strong>
+    <p><?php echo($_SESSION['delete_fail']); ?></p></div><?php
     //Removes the message after displaying once
     unset($_SESSION['delete_fail']);
 
@@ -125,8 +125,8 @@ if (isset($_SESSION['update'])) {
     //Displays session message
     ?>
     <div class="success">
-    <p><strong>Success!</strong>
-    <?php echo($_SESSION['update']); ?></div><?php
+    <strong>Success!</strong>
+    <p>    <?php echo($_SESSION['update']); ?></p></div><?php
     //Removes the message after displaying once
     unset($_SESSION['update']);
 
@@ -137,13 +137,12 @@ if (isset($_SESSION['update_fail'])) {
     //Displays session message
     ?>
     <div class="danger">
-    <p><strong>Success!</strong>
-    <?php echo($_SESSION['update_fail']); ?></div><?php
+    <strong>Nope!</strong>
+    <p>  <?php echo($_SESSION['update_fail']); ?></p></div><?php
     //Removes the message after displaying once
     unset($_SESSION['update_fail']);
 
 }
-
 ?>
 
 
@@ -226,7 +225,7 @@ if (isset($_SESSION['update_fail'])) {
             ?>
             </tbody>
         </table>
-<a class="btn btn-primary" href="CRUD_list/addList.php">Add List</a>
+        <a class="btn btn-primary" href="CRUD_list/addList.php">Add List</a>
     </div>
 </div>
 </body>
