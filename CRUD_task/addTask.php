@@ -6,7 +6,6 @@ if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
     exit();
 }
-
 //Select Database
 $db_select = mysqli_select_db($conn, 'ToDoList');
 
@@ -22,7 +21,7 @@ if (isset($_POST['submit'])) {
 
 
     //SQL Query to Insert data into database
-     $sql = "INSERT INTO ToDoList.task SET 
+    $sql = "INSERT INTO ToDoList.task SET 
     task_name = '$task_name',
     task_description = '$task_description',
     list_id = '$list_id',
@@ -95,17 +94,17 @@ if (isset($_POST['submit'])) {
                     </li>
                     <?php
                     //Query to get the lists from the database
-                    $sql2 = "SELECT * FROM ToDoList.list";
+                    $sql3 = "SELECT * FROM ToDoList.list";
 
                     //Execute the query
-                    $result2 = mysqli_query($conn, $sql2);
+                    $result3 = mysqli_query($conn, $sql3);
 
                     //Check whether the query executed or not
-                    if ($result2 == true) {
+                    if ($result3 == true) {
                         //Display the list in menu
-                        while ($row2 = mysqli_fetch_assoc($result2)) {
-                            $list_id = $row2['list_id'];
-                            $list_name = $row2['list_name'];
+                        while ($row3 = mysqli_fetch_assoc($result3)) {
+                            $list_id = $row3['list_id'];
+                            $list_name = $row3['list_name'];
                             ?>
 
                             <li class="nav-item ">
@@ -153,34 +152,28 @@ if (isset($_SESSION['add_fail'])) {
             <label>
                 <select class="form-control" id="Select" name="list_id">
                     <?php
-                    //Database connection
-                    $con = mysqli_connect('localhost', 'root', 'mysql');
-
-                    //Select Database
-                    $db_select2 = mysqli_select_db($conn, 'ToDoList');
-
                     //Select all from list
-                    $sql2 = "SELECT * FROM todolist.list";
+                    $sql4 = "SELECT * FROM todolist.list";
 
                     //Execute The Query
-                    $result2 = mysqli_query($conn, $sql2);
+                    $result4 = mysqli_query($conn, $sql4);
 
                     //Check whether the query is executed or not
-                    if ($result2 == true) {
+                    if ($result4 == true) {
                         //Create a variable to count rows
-                        $count_rows2 = mysqli_num_rows($result2);
+                        $count_rows4 = mysqli_num_rows($result4);
                         //If there is data in the database then display all in dropdowns. Else display none as option
-                        if ($count_rows2 > 0) {
+                        if ($count_rows4 > 0) {
                             //Display all the tasks on dropdown from database
-                            while ($row3 = mysqli_fetch_assoc($result2)) {
-                                $list_id = $row3['list_id'];
-                                $list_name = $row3['list_name'];
+                            while ($row4 = mysqli_fetch_assoc($result4)) {
+                                $list_id = $row4['list_id'];
+                                $list_name = $row4['list_name'];
 
                                 ?>
                                 <option value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
                                 <?php
                             }
-                        } else {
+                        } else if ($count_rows4 == 0) {
                             //Display none as option
                             ?>
                             <option value="0">None
