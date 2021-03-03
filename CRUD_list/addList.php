@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 
     //SQL Query to Insert data into database
     $sql = "INSERT INTO list SET list_name = '$list_name'";
-    
+
     $execute = mysqli_query($conn, $sql);
 
     if ($execute == true) {
@@ -88,14 +88,11 @@ if (isset($_POST['submit'])) {
                 </li>
 
                 <?php
-                //Connect to database
-                $conn2 = mysqli_connect('localhost', 'root', 'mysql');
-
                 //Query to get the lists from the database
                 $sql2 = "SELECT * FROM ToDoList.list";
 
                 //Execute the query
-                $result2 = mysqli_query($conn2, $sql2);
+                $result2 = mysqli_query($conn, $sql2);
 
                 //Check whether the query executed or not
                 if ($result2 == true) {
