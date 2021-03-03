@@ -54,7 +54,7 @@ $db_select = mysqli_select_db($conn, 'ToDoList');
 
             <?php
             //Select all from list table
-             $sql2 = "SELECT * FROM ToDoList.list";
+            $sql2 = "SELECT * FROM ToDoList.list";
 
             //Execute the query
             $result2 = mysqli_query($conn, $sql2);
@@ -94,7 +94,6 @@ if (isset($_SESSION['add'])) {
     unset($_SESSION['add']);
 }
 
-
 //Check whether the session is deleted or not
 if (isset($_SESSION['delete'])) {
     //Displays session message
@@ -133,18 +132,6 @@ if (isset($_SESSION['update'])) {
 }
 
 
-if (isset($_SESSION['update_fail'])) {
-    //Displays session message
-    ?>
-    <div class="danger">
-    <strong>Success!</strong>
-    <p><?php echo($_SESSION['update_fail']); ?></p>
-    </div><?php
-    //Removes the message after displaying once
-    unset($_SESSION['update_fail']);
-
-}
-
 ?>
 
 
@@ -166,7 +153,7 @@ if (isset($_SESSION['update_fail'])) {
 
 
             <?php
-             //Select all from list
+            //Select all from list
             $sql = "SELECT * FROM ToDoList.task";
 
             //Execute The Query
@@ -179,10 +166,8 @@ if (isset($_SESSION['update_fail'])) {
 
             $id = 1;
 
-            //Check whether there is data in database or not
-            if ($count_rows > 0) {
-
             //If There is data in the database. Display in table
+            if ($count_rows > 0) {
             //$row is an array. The data will be stored as an array in $row
             while ($row = mysqli_fetch_assoc($result)) {
             $task_id = $row['task_id'];
@@ -191,7 +176,6 @@ if (isset($_SESSION['update_fail'])) {
             $priority = $row['priority'];
             $begin_date = $row['begin_date'];
             $deadline = $row['deadline'];
-
             ?>
             <tbody>
 
@@ -217,10 +201,8 @@ if (isset($_SESSION['update_fail'])) {
                 ?>
                 <!-- Makes 1 column out of different columns -->
                 <tr>
-                    <td colspan="3">No List Added Yet.</td>
+                    <td colspan="3">No Task Added Yet.</td>
                 </tr>
-
-
                 <?php
             }
             }
